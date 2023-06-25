@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <script src="../../../assets/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="pair">
+    <header class="homey-header" style="margin-bottom: 0">
+      <h1 class="homey-title" data-i18n="settings.title">
+        <!-- This will be filled with the translated string with key 'settings.title'. -->
+      </h1>
+      <p class="homey-subtitle" data-i18n="settings.subtitle">
+        <!-- This will be filled with the translated string with key 'settings.subtitle'. -->
+      </p>
+    </header>
+  
+    <fieldset class="homey-form-fieldset" style="margin-top: 0">
+      <div class="homey-form-group">
+        <label class="homey-form-label" for="serial" data-i18n="settings.serial"></label>
+        <input class="homey-form-input" v-model="data.serial" id="username" type="text" value=""/>
+      </div>
+      <div class="homey-form-group">
+        <label class="homey-form-label" for="username" data-i18n="settings.key"></label>
+        <input class="homey-form-input" v-model="data.key" id="username" type="text" value=""/>
+      </div>
+      <div class="homey-form-group">
+        <label class="homey-form-label" for="password" data-i18n="settings.password"></label>
+        <input class="homey-form-input" v-model="data.password" id="password" type="password" value=""/>
+      </div>
+      <div class="homey-form-group">
+        <label class="homey-form-label" for="password" data-i18n="settings.interval"></label>
+        <input class="homey-form-input" v-model="data.interval" id="password" type="number" placeholder="30" min="10" max="3600" value=""/>
+      </div>
+      <div>
+        <div class="flex-container">
+          <div class="item-left">{{error}}</div>
+          <div class="item-right"><button v-on="enableButton ? { click: () => connect() } : {click: ($event) => $event.preventDefault() }" data-i18n="settings.connect" :class="{ 'is-loading': loading, 'is-disabled': !enableButton }" class="homey-button-primary">Connect</button></div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <script>
+    new Vue({
+      el: "#pair",
+      data: function () {
+        return {
+          data: {
+            serial: '',
+            key: '',
+            password: '',
+            interval: 30
+          },
+          loading: false,
+          error: ''
+        }
+      },
+      computed: {
+        enableButton(){
+            return Object.values(this.data).every(v=>!!v)
+        }
+      },
+      methods: {
+        connect() {
+          this.loading = true;
+
+          Homey.emit("validate_device", this.data, (error, device) => {
+            this.loading = false;
+            console.log(error)
+            if (error || ! device) {
+              console.log(error)
+              this.error = "Error: " + error.message;
+              return
+            }
+            Homey.createDevice(device, function (error, result) {
+                if (error) {
+                  console.error('error adding device', error);
+                  this.error = "Error: " + error.message;
+                  return;
+                }
+                // Success.
+                Homey.done();
+              });
+          });
+        }
+      }
+    });
+  </script>
+  <style>
+    .flex-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .item-left {
+      flex-grow: 1;
+      color: red;
+    }
+
+    .item-right {
+      margin-left: 10px;
+    }
+  </style>
+</body>
+
+</html>

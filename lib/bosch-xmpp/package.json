@@ -1,0 +1,62 @@
+{
+  "name": "bosch-xmpp",
+  "version": "1.4.1",
+  "description": "Bosch XMPP protocol library and command line interface",
+  "main": "index.js",
+  "keywords": [
+    "bosch",
+    "easyremote",
+    "easycontrol",
+    "rrc",
+    "bosch easyremote",
+    "bosch easycontrol",
+    "bosch rrc",
+    "ivt",
+    "ivt anywhere",
+    "nefit",
+    "easy",
+    "nefit easy",
+    "buderus",
+    "tc100",
+    "junkers",
+    "junkers control",
+    "ct100",
+    "ct200",
+    "worcester",
+    "worcester wave",
+    "km50",
+    "km100",
+    "km200",
+    "lani",
+    "lan2"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robertklep/bosch-xmpp.git"
+  },
+  "bin": {
+    "bosch-xmpp": "./bin/bosch-xmpp"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "author": "Robert Klep <robert@klep.name>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/robertklep/bosch-xmpp/issues"
+  },
+  "homepage": "https://github.com/robertklep/bosch-xmpp#readme",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "cors": "^2.8.4",
+    "debug": "^3.1.0",
+    "docopt": "^0.6.2",
+    "express": "^4.16.3",
+    "http-string-parser": "0.0.5",
+    "morgan": "^1.9.1",
+    "node-xmpp-client": "^3.2.0",
+    "promise-queue": "^2.2.5",
+    "sasl-scram-sha-1": "^1.2.1",
+    "saslmechanisms": "^0.1.1"
+  }
+}
